@@ -1,0 +1,55 @@
+{
+  "synthetic": true,
+  "cases": [
+    {
+      "file": "inflated-assurance.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "resigned-event-omission.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "resigned-head-mismatch.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "duplicate-payload-key.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "lone-surrogate.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "canonically-equivalent-keys.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "unknown-algorithm.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "signature-substitution.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "unsafe-integer.json",
+      "integrityValid": false,
+      "isValid": false
+    },
+    {
+      "file": "recording-status.json",
+      "integrityValid": false,
+      "isValid": false
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "fixture": "synthetic-certificate.json",
+  "synthetic": true,
+  "certificateSHA256": "f2753eba44e6b19641587f87e3bf74a6e7a20e952f9434984c885f54b1964ac3",
+  "keyID": "8f7828a1dec30f1725468a62f6774f532652e9d9429ded15eae6989a9e404849",
+  "payloadSHA256": "5c403f4a4774a50f2bdd7e7edc76fd69b7c5229e4d98ac32d493d327510491b5",
+  "signedMessageSHA256": "33fd18be94ef7001babf487e7b9f9fc3c1b704c215d8dc3346bbd15c6d1cdf31",
+  "headerSHA256": "b8410a2d4227e5d3af512fb03a046bb3945b47edc965fbf250957eeb052ee7a5",
+  "anchor": "f40ef35bb72fd43399846035dbfd375f6bc9334abbee06e469defb48cf9eb8f6",
+  "eventHashes": [
+    "3ffb68d10713aa807a92519557763dbff06dd6707668ce6dd9350a71a68eb66a",
+    "3c02001a4e37389b12352a1eb99ec9b09e6611ac762e09d9aa006969d82493bc",
+    "663aafdc33a5af6a0ea9d6c6a4abd28ebb07af89b1c3652398258bcfdd572fee"
+  ],
+  "documentSHA256": "d841b0e4eb0b89a6d509a3954d9518601eb0750fdb0f6c7e27d21989166b90eb",
+  "headHash": "663aafdc33a5af6a0ea9d6c6a4abd28ebb07af89b1c3652398258bcfdd572fee"
+}

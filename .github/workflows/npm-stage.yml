@@ -1,0 +1,48 @@
+name: Stage npm release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Package version to stage for review
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    if: github.repository == 'extraara/extraara-verifier' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm install --global npm@11.20.0 --ignore-scripts
+      - run: npm run check:release
+        env:
+          EXPECTED_VERSION: ${{ inputs.version }}
+          RELEASE_REPOSITORY_VISIBILITY: ${{ github.event.repository.visibility }}
+      - run: npm test
+      - run: npm run test:release
+      - id: package
+        run: npm run check:package
+      - name: Stage tested package with provenance
+        run: npm stage publish "$PACKAGE_TARBALL" --provenance --access public --tag latest
+        env:
+          PACKAGE_TARBALL: ${{ steps.package.outputs.tarball }}
