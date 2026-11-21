@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (not yet released)
+## 0.1.0
 
 - Add an npm release workflow with provenance and manual approval.
 - Check the npm archive by installing it in a temporary project.
