@@ -67,9 +67,7 @@ See the [API reference](docs/API.md) for options, return values and size limits.
 
 ## npm
 
-The npm package has not been released yet. Use the source checkout for now.
-
-After `0.1.0` is published, it can be installed and checked with:
+Install version `0.1.0` and check its signatures:
 
     npm install --save-exact @extraara/verifier@0.1.0
     npm audit signatures

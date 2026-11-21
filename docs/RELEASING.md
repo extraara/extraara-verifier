@@ -4,7 +4,7 @@ Package: `@extraara/verifier`
 
 Source: `https://github.com/extraara/extraara-verifier`
 
-The package contains the verifier, specifications and synthetic test data. The ExtraProof apps and production signing material are excluded. npm publishing is not enabled yet.
+The package contains the verifier, specifications and synthetic test data. The ExtraProof apps and production signing material are excluded. GitHub Actions submits each release to npm for approval.
 
 ## Setup
 
@@ -43,7 +43,7 @@ Using npm 11.15.0 or later, run from that directory:
 npm stage publish --access public --provenance=false --tag bootstrap
 ```
 
-npm creates a public `0.0.0-stage` placeholder and a pending bootstrap submission. Do not approve the bootstrap submission. Configure the trusted publisher, then reject that submission in npm's staged-packages view.
+npm creates a public `0.0.0-stage` placeholder and a pending bootstrap submission. Do not approve the bootstrap submission. Configure the trusted publisher and keep the submission pending until the first real release is published. Rejecting the only pending submission before that can remove the placeholder and its trusted-publisher configuration.
 
 Keep the directory empty except for `package.json`. The command registers the name without provenance; do not use it to release the actual verifier.
 
@@ -64,7 +64,7 @@ Leave direct publishing and dist-tag management disabled. The workflow uses shor
 
 ## Prepare a release
 
-Update `package.json` and the changelog in a pull request. For the first release, also replace the README's unreleased notice with installation instructions. Versions must use `major.minor.patch`; prerelease versions are not supported by this workflow.
+Update `package.json`, the changelog and any affected installation instructions in a pull request. Versions must use `major.minor.patch`; prerelease versions are not supported by this workflow.
 
 Run:
 
@@ -84,7 +84,8 @@ After the repository owner has reviewed and merged the latest revision:
 2. The job checks the repository, branch, commit and version, then tests and packs the code. It submits the tested archive to npm with provenance.
 3. Review the pending package on npm and approve it with two-factor authentication. Only this approval publishes the version with the `latest` tag.
 4. Install that version in a fresh project and run `npm audit signatures`. Check for a verified provenance attestation as well as a registry signature. The source commit and workflow link on npm must match the reviewed revision and its successful release run.
-5. Update the developer website to use npm after these checks pass. Keep the ZIP available until then.
+5. After the first real release is published, reject the pending `0.0.0-bootstrap` submission. Do not approve it.
+6. Update the developer website to use npm after these checks pass. Keep the ZIP available until then.
 
 If a job fails after submission, check npm for a pending package before retrying. Never overwrite or republish an existing version.
 
