@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "payload.schema.json",
+  "title": "ExtraProof decoded signed payload",
+  "type": "object",
+  "required": ["header", "events", "headHash", "completion"],
+  "properties": {
+    "header": {
+      "type": "string",
+      "contentEncoding": "base64",
+      "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+      "maxLength": 21848,
+      "contentMediaType": "application/json",
+      "contentSchema": {
+        "$ref": "#/$defs/sessionHeader"
+      }
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": {
+        "$ref": "#/$defs/chainedEvent"
+      }
+    },
+    "headHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "completion": {
+      "type": "object",
+      "required": ["endedAtMilliseconds", "status"],
+      "properties": {
+        "endedAtMilliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "status": {
+          "enum": ["completed", "interrupted"]
+        },
+        "fileBinding": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/fileBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "sessionHeader": {
+      "type": "object",
+      "required": [
+        "protocolVersion",
+        "sessionID",
+        "startedAtMilliseconds",
+        "targetBundleID",
+        "mode",
+        "assurance",
+        "synthetic",
+        "recorderVersion"
+      ],
+      "properties": {
+        "protocolVersion": {
+          "const": "extraproof/1"
+        },
+        "sessionID": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{8}-(?:[a-fA-F0-9]{4}-){3}[a-fA-F0-9]{12}$"
+        },
+        "startedAtMilliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "targetBundleID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "mode": {
+          "enum": ["observation", "sealedObservation"]
+        },
+        "assurance": {
+          "const": "localObservation"
+        },
+        "synthetic": {
+          "type": "boolean"
+        },
+        "recorderVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": true
+    },
+    "observation": {
+      "type": "object",
+      "required": ["kind", "timestampMilliseconds", "monotonicNanoseconds", "metadata"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "timestampMilliseconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "monotonicNanoseconds": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]{0,19})$",
+          "$comment": "Additionally value must be <=18446744073709551615 and nondecreasing."
+        },
+        "metadata": {
+          "type": "object",
+          "maxProperties": 32,
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 2048
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "chainedEvent": {
+      "type": "object",
+      "required": ["sequence", "body", "previousHash", "hash"],
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "body": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+          "maxLength": 21848,
+          "contentMediaType": "application/json",
+          "contentSchema": {
+            "$ref": "#/$defs/observation"
+          }
+        },
+        "previousHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": true
+    },
+    "fileBinding": {
+      "type": "object",
+      "required": ["sha256", "byteCount", "fileName"],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "byteCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "fileName": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 4096
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

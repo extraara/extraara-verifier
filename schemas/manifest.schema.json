@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "manifest.schema.json",
+  "type": "object",
+  "required": [
+    "version",
+    "packageID",
+    "document",
+    "record",
+    "privacyProfile",
+    "extensions",
+    "criticalExtensions"
+  ],
+  "properties": {
+    "version": {
+      "const": "extraara-package/0.1"
+    },
+    "packageID": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$"
+    },
+    "document": {
+      "type": "object",
+      "required": ["algorithm", "digest", "byteCount", "mediaType", "role", "documentID"],
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byteCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 67108864
+        },
+        "mediaType": {
+          "enum": [
+            "text/plain",
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ]
+        },
+        "role": {
+          "const": "export-artifact"
+        },
+        "documentID": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "record": {
+      "type": "object",
+      "required": ["algorithm", "digest", "byteCount", "format", "sessionID", "headHash", "keyID"],
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "byteCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777216
+        },
+        "format": {
+          "const": "extraproof/1"
+        },
+        "sessionID": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$"
+        },
+        "headHash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "keyID": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacyProfile": {
+      "enum": ["synthetic-demo-v1", "minimized-v1", "word-minimized-v1"]
+    },
+    "extensions": {
+      "type": "object",
+      "maxProperties": 8,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9.-]{0,63}$"
+      }
+    },
+    "criticalExtensions": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9.-]{0,63}$"
+      }
+    }
+  },
+  "additionalProperties": false
+}

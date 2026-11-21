@@ -1,0 +1,46 @@
+{
+  "name": "@extraara/verifier",
+  "version": "0.1.0",
+  "description": "Offline verification of ExtraProof Creation Records and Extraara package manifests.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/extraara/extraara-verifier.git"
+  },
+  "homepage": "https://extraproof.de/developers/",
+  "bugs": "https://github.com/extraara/extraara-verifier/issues",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": "./src/index.mjs",
+  "bin": {
+    "extraara-verify": "./bin/extraara-verify.mjs"
+  },
+  "files": [
+    "src",
+    "bin",
+    "schemas",
+    "docs",
+    "fixtures",
+    "test",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check:package": "node scripts/check-package.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "test:release": "node --test scripts/release-context.test.mjs",
+    "verify:example": "node bin/extraara-verify.mjs package fixtures/package/manifest.json fixtures/package/record.json --document fixtures/package/document.txt --json"
+  }
+}

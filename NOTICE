@@ -1,0 +1,11 @@
+Extraara Verifier
+Copyright 2026 Extraara
+
+Licensed under the Apache License, Version 2.0.
+
+This distribution contains verification code, format specifications, schemas
+and synthetic interoperability data. The verification algorithms implement
+extraproof/1 and extraara-package/0.1.
+
+Node.js is an external runtime and is not included in this distribution.
+No license to Extraara trademarks is granted.
